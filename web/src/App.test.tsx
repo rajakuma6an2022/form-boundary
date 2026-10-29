@@ -1,15 +1,10 @@
-import { render, screen, within } from '@testing-library/react';
+import { screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { MemoryRouter } from 'react-router';
 import { describe, expect, it } from 'vitest';
-import { App } from './App';
+import { AUTHENTICATED, renderApp } from './test/utils';
 
 function renderAt(path: string) {
-  return render(
-    <MemoryRouter initialEntries={[path]}>
-      <App />
-    </MemoryRouter>,
-  );
+  return renderApp(path, AUTHENTICATED);
 }
 
 describe('app shell', () => {

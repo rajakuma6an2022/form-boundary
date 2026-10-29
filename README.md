@@ -37,3 +37,18 @@ cd web && npm run lint && npm run typecheck && npm test && npm run build
 
 ## Docs
 Architecture decisions: `docs/adr/`. Daily log: `docs/log.md`.
+
+
+## Live demo
+- App: https://form-boundary.vercel.app
+- API health: https://form-boundary.vercel.app/api/v1/health
+
+### Cold start (free tiers)
+The API runs on Render's free plan and sleeps after inactivity. The first request after a pause can take up to
+about a minute; the app shows "The server is waking up" while it waits. Atlas M0 can also be slow on first use.
+Open the app once before a demo to warm it up.
+
+## Deployment
+- API on Render: root `api`, build `npm ci --include=dev && npm run build`, start `npm start`, health check `/api/v1/health`.
+- Web on Vercel: root `web`; `web/vercel.json` forwards `/api/*` to the API so cookies stay first-party.
+- Env (Render): `NODE_ENV`, `NODE_VERSION=22`, `MONGODB_URI`, `JWT_ACCESS_SECRET`, `CORS_ORIGIN` (the Vercel production URL).
