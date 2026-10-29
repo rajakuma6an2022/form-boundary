@@ -1,7 +1,7 @@
 import { env } from '../common/env';
 import { logger } from '../common/logger';
 import { connectDb, disconnectDb } from '../db';
-import { syncAllIndexes } from '../models';
+import { syncAllIndexes } from '../modules';
 
 async function main(): Promise<void> {
   await connectDb(env.MONGODB_URI, { autoIndex: false });
