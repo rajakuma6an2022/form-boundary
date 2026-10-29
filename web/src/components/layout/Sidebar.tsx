@@ -1,5 +1,7 @@
 import { FileText, Inbox, LayoutDashboard, LogOut, Settings } from 'lucide-react';
 import { NavLink } from 'react-router';
+import { logout } from '../../api/auth';
+import { useAppSelector } from '../../store/hooks';
 import { Logo } from './Logo';
 
 const NAV_ITEMS = [
@@ -9,7 +11,18 @@ const NAV_ITEMS = [
   { to: '/settings', label: 'Settings', Icon: Settings },
 ];
 
+function initials(name: string): string {
+  return name
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase() ?? '')
+    .join('');
+}
+
 export function Sidebar() {
+  const user = useAppSelector((state) => state.auth.user);
+
   return (
     <aside className="sticky top-0 flex h-screen w-[260px] shrink-0 flex-col border-r border-line bg-surface">
       <div className="flex h-16 items-center px-5">
@@ -44,15 +57,18 @@ export function Sidebar() {
             aria-hidden
             className="grid size-9 shrink-0 place-items-center rounded-full bg-primary-soft text-sm font-semibold text-primary-hover"
           >
-            RK
+            {initials(user?.name ?? '')}
           </span>
           <div className="min-w-0 flex-1">
-            <p className="truncate text-sm font-medium text-ink">Raja Kumar</p>
-            <p className="truncate text-xs text-ink-muted">raja@example.com</p>
+            <p className="truncate text-sm font-medium text-ink">{user?.name}</p>
+            <p className="truncate text-xs text-ink-muted">{user?.email}</p>
           </div>
           <button
             type="button"
             aria-label="Log out"
+            onClick={() => {
+              void logout();
+            }}
             className="grid size-9 shrink-0 place-items-center rounded-control text-ink-muted transition-colors hover:bg-canvas hover:text-ink"
           >
             <LogOut className="size-4" aria-hidden />
