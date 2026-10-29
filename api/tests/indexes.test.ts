@@ -1,7 +1,7 @@
 import mongoose, { type mongo } from 'mongoose';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { connectDb, disconnectDb } from '../src/db';
-import { Form, RefreshToken, Submission, syncAllIndexes, User } from '../src/models';
+import { Form, RefreshToken, Submission, syncAllIndexes, User } from '../src/modules';
 
 type IndexInfo = Record<string, unknown>;
 
